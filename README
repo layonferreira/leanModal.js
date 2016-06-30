@@ -1,3 +1,9 @@
-A super simple JQuery plugin for modal windows. works with your CSS.
+This is a fork of [FinelySliced LeanModal](https://github.com/FinelySliced/leanModal.js).
+This fork, adds a option to initialise the modal without a link.
 
-Built for all the short dialogs, alerts, panels and such associated with an app, that you may want to handle in a modal window. Designed to handle hidden content, and doesn't apply any styles to the target element, other than for displaying and positioning.
+
+## Example
+```javascript
+$("#modal-id").leanModal();
+$("#modal-id").data("leanModal").openModal();
+```
