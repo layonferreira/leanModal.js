@@ -5,7 +5,8 @@
     var defaults = {
       top: 100,
       overlay: 0.5,
-      closeButton: null
+      closeButton: null,
+      openOnClick: true
     }
 
     var overlay = $("<div id='lean_overlay'></div>");
@@ -60,9 +61,12 @@
         $(modal_id).fadeTo(200, 1);
       }
       $(this).data("leanModal", leanModalInstance)
+
       $(this).click(function(e) {
-        $(this).data("leanModal").openModal();
-        e.preventDefault();
+        if(options.openOnClick) {
+          $(this).data("leanModal").openModal();
+          e.preventDefault();
+        }
       });
     });
   }
