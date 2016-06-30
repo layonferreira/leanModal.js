@@ -3,6 +3,7 @@ This fork, adds a option to initialise the modal without a link.
 
 
 ## Example
+
 ```javascript
 $("#modal-id").leanModal();
 $("#modal-id").data("leanModal").openModal();
