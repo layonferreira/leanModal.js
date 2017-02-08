@@ -1,37 +1,46 @@
 (function($) {
+  var registered_modals = []
 
   $.fn.leanModal = function(options) {
-
     var defaults = {
       top: 100,
-      overlay: 0.5,
+      overlay: 0.4,
       closeButton: null,
-      openOnClick: true
+      openOnClick: true,
+      closeOnClick: true
     }
 
-    var overlay = $("<div id='lean_overlay'></div>");
 
-    $("body").append(overlay);
+    var overlay_id = "lean_overlay";
+
+    if($("#" + overlay_id).length == 0){
+      $("body").append($("<div id='" + overlay_id + "'></div>"));
+    }
 
     var options = $.extend(defaults, options);
 
-    function close_modal(modal_id) {
-
-      $("#lean_overlay").fadeOut(200);
-
+    function close_modal(modal_id, fade_overlay = true) {
+      if(fade_overlay){
+        $("#lean_overlay").fadeOut(200);
+      }
       $(modal_id).css({
         'display': 'none'
       });
-
     }
     return this.each(function() {
       var leanModalInstance = this
+      registered_modals.push(this)
       this.openModal = function(modal_id) {
+        registered_modals.forEach(function(elem){
+          elem.closeModal(null, false)
+        })
         var o = options;
         var modal_id = modal_id || $(this).attr("href");
 
         $("#lean_overlay").click(function() {
-          close_modal(modal_id);
+          if(o.closeOnClick) {
+            close_modal(modal_id);
+          }
         });
 
         $(o.closeButton).click(function() {
@@ -40,12 +49,6 @@
 
         var modal_height = $(modal_id).outerHeight();
         var modal_width = $(modal_id).outerWidth();
-
-        $('#lean_overlay').css({
-          'display': 'block',
-          opacity: 0
-        });
-
         $('#lean_overlay').fadeTo(200, o.overlay);
 
         $(modal_id).css({
@@ -60,6 +63,12 @@
 
         $(modal_id).fadeTo(200, 1);
       }
+
+      this.closeModal = function(modal_id, fade_overlay = true) {
+        var modal_id = modal_id || $(this).attr("href")
+        close_modal(modal_id, fade_overlay);
+      }
+
       $(this).data("leanModal", leanModalInstance)
 
       $(this).click(function(e) {
