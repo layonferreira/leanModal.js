@@ -22,6 +22,7 @@
     function close_modal(modal_id, fade_overlay = true) {
       if(fade_overlay){
         $("#lean_overlay").fadeOut(200);
+        $("#lean_overlay").off("click")
       }
       $(modal_id).css({
         'display': 'none'
