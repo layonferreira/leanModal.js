@@ -1,3 +1,4 @@
+// https://github.com/layonferreira/leanModal.js
 (function($) {
   var registered_modals = []
 
@@ -19,7 +20,10 @@
 
     var options = $.extend(defaults, options);
 
-    function close_modal(modal_id, fade_overlay = true) {
+    function close_modal(modal_id, fade_overlay) {
+      if (fade_overlay === undefined) {
+          fade_overlay = true;
+      }
       if(fade_overlay){
         $("#lean_overlay").fadeOut(200);
         $("#lean_overlay").off("click")
@@ -50,7 +54,7 @@
 
         var modal_height = $(modal_id).outerHeight();
         var modal_width = $(modal_id).outerWidth();
-        $('#lean_overlay').fadeTo(200, o.overlay);
+        $('#lean_overlay').stop(true, false).fadeTo(200, o.overlay);
 
         $(modal_id).css({
           'display': 'block',
@@ -65,7 +69,7 @@
         $(modal_id).fadeTo(200, 1);
       }
 
-      this.closeModal = function(modal_id, fade_overlay = true) {
+      this.closeModal = function(modal_id, fade_overlay) {
         var modal_id = modal_id || $(this).attr("href")
         close_modal(modal_id, fade_overlay);
       }
